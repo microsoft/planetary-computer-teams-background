@@ -1,0 +1,70 @@
+# The image name for the generated background
+image_name: pc-teams-background.jpg
+
+# The folder Teams uses for background images.
+# Normally this is to /mnt/c/Users/${USER}/AppData/Roaming/Microsoft/Teams/Backgrounds/Uploads
+# on a WLS 2 system, where the ${USER} is the windows user name.
+teams_image_folder:
+
+# AOIs defines areas you want to highlight. The background generation
+# script will prefer to use new images over AOIs over anything. If
+# there are no new images or no AOIs provided, the script will
+# use the area of a randomly selected recent image.
+#
+# aois:
+#   # A FeatureCollection GeoJSON of areas
+#   # to highlight. See the README for more info.
+#   # NOTE: The script will edit this file by
+#   # adding information to the properties
+#   # of features.
+#   feature_collection_path:
+#   # If a new Item is found over a AOI, don't recreate
+#   # the background until this many days have passed.
+#   refresh_days: 1
+
+# Collections to search items for.
+collections:
+- id: sentinel-2-l2a
+  # Name of rendering option that determines the render configuration
+  # to use for the image. Should be the same as the name
+  # of the rendering option in the PC Explorer as seen
+  # in the dropdown menu.
+  # If blank or missing, will default to using the first rendering option
+  rendering_option:
+  # Searches for items this many days since the time an image is being generated.
+  # Defaults to 30 days
+  search_days: 30
+  # Filters to apply to the search.
+  # Recommended to use eo:cloud_cover if available on the collection.
+  filters:
+    - property: eo:cloud_cover
+      op: <=
+      value: 10
+
+# Image dimensions
+width: 1040
+height: 780
+thumbnail_width: 200
+thumbnail_height: 150
+
+# Provide this to customize where the JSON info about the image
+# is saved. Defaults to the same directory as the image,
+# with an -info.json suffix.
+image_info_path:
+
+apis:
+  stac: https://planetarycomputer.microsoft.com/api/stac/v1/
+  info: https://planetarycomputer.microsoft.com/api/data/v1/mosaic/info
+  image: https://func-pct-apis-westeurope-staging.azurewebsites.net/image
+
+# Maximum search results to pull from the STAC API
+max_search_results: 1000
+
+# Maximum time to wait for a image to be regenerated.
+# The script uses the last accessed time of the image file
+# to determine when a Teams background has been used; however,
+# Teams does some caching and may not update the image file
+# stats. This setting will force a refresh after a certain
+# amount of time has passed. If not provided, defaults to
+# waiting for the access time to show a system read.
+force_regen_after: 1 day
