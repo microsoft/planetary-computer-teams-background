@@ -74,6 +74,7 @@ class Settings(BaseModel):
     aois: Optional[AOIsConfig] = None
     image_info_path: Optional[str] = None
     force_regen_after: Optional[str] = None
+    mirror_image: bool = False
 
     def get_image_path(self) -> Path:
         return Path(self.teams_image_folder) / self.image_name
@@ -408,8 +409,10 @@ class TeamsBackgroundGenerator:
         }
 
         image = self.fetch_image(request_data)
-        mirrored = ImageOps.mirror(image)
-        mirrored.convert("RGB").save(self.settings.get_image_path())
+        bg_image = image
+        if self.settings.mirror_image:
+            bg_image = ImageOps.mirror(bg_image)
+        bg_image.convert("RGB").save(self.settings.get_image_path())
         thumbnail = image.resize(
             (self.settings.thumbnail_width, self.settings.thumbnail_height)
         )
