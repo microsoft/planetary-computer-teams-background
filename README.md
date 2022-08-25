@@ -12,7 +12,7 @@ __Note__: This project is still under development, and utilizes a unreleased tes
 
 To use this project, first install the dependencies.
 
-Ideally in a virtual environment](https://docs.python.org/3/tutorial/venv.html). For example, using a bash shell:
+Ideally in a [virtual environment](https://docs.python.org/3/tutorial/venv.html). For example, using a bash shell:
 
 ```
 > python -m venv venv
