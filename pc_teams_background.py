@@ -75,6 +75,7 @@ class Settings(BaseModel):
     image_info_path: Optional[str] = None
     force_regen_after: Optional[str] = None
     mirror_image: bool = False
+    show_branding: bool = True
 
     def get_image_path(self) -> Path:
         return Path(self.teams_image_folder) / self.image_name
@@ -399,10 +400,11 @@ class TeamsBackgroundGenerator:
         bg_geom = self.get_bg_geom(target_geom)
         render_params = self.get_render_params(collection_id, render_options)
         cql = self.get_base_cql(collection_id, collection_config.filters)
-        cql = cql_add_geom_arg(cql, bg_geom)
 
         request_data: Dict[str, Any] = {
             "cql": cql,
+            "geometry": bg_geom,
+            "showBranding": self.settings.show_branding,
             "render_params": render_params + f"&collection={collection_id}",
             "cols": self.settings.width,
             "rows": self.settings.height,

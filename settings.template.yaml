@@ -55,7 +55,7 @@ image_info_path:
 apis:
   stac: https://planetarycomputer.microsoft.com/api/stac/v1/
   info: https://planetarycomputer.microsoft.com/api/data/v1/mosaic/info
-  image: https://func-pct-apis-westeurope-staging.azurewebsites.net/image
+  image: https://planetarycomputer.microsoft.com/api/f/v1/image
 
 # Maximum search results to pull from the STAC API
 max_search_results: 1000
@@ -68,3 +68,7 @@ max_search_results: 1000
 # amount of time has passed. If not provided, defaults to
 # waiting for the access time to show a system read.
 force_regen_after: 1 day
+
+# Controls whether the Microsoft logo will
+# be placed on the image
+show_branding: true
