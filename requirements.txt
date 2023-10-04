@@ -1,4 +1,4 @@
-Pillow==9.3.0
+Pillow==10.0.1
 pystac-client==0.4.0
 shapely==1.8.2
 pyyaml==6.0
